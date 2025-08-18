@@ -1,5 +1,6 @@
 import { useState } from "react";
 import StudentCard from "./StudentCard";
+import "./App.css"; // for styles
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -19,31 +20,39 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Student Directory</h1>
+    <div className="app-container">
+      <h1 className="title">🎓 Student Directory</h1>
 
-      <input 
-        type="text" 
-        placeholder="Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input 
-        type="text" 
-        placeholder="Course" 
-        value={course} 
-        onChange={(e) => setCourse(e.target.value)}
-      />
-      <button onClick={addStudent}>Add</button>
-
-      {students.map((student, index) => (
-        <StudentCard 
-          key={index}
-          name={student.name} 
-          course={student.course} 
-          onDelete={() => deleteStudent(index)}
+      <div className="form-container">
+        <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-      ))}
+        <input
+          type="text"
+          placeholder="Enter Course"
+          value={course}
+          onChange={(e) => setCourse(e.target.value)}
+        />
+        <button onClick={addStudent}>Add Student</button>
+      </div>
+
+      <div className="students-list">
+        {students.length === 0 ? (
+          <p className="empty-message">No students added yet 🚀</p>
+        ) : (
+          students.map((student, index) => (
+            <StudentCard
+              key={index}
+              name={student.name}
+              course={student.course}
+              onDelete={() => deleteStudent(index)}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }
